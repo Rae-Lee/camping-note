@@ -15,6 +15,13 @@ const userSchema = new Schema({
   like: {
     type: Array
   },
+  image: {
+    type: String
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
   createdAt: {
     type: Date,
     default: Date.now

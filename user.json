@@ -3,17 +3,30 @@
     {
       "name": "user1",
       "email": "user1@example.com",
-      "password": "12345678"
+      "password": "12345678",
+      "image": "https://loremflickr.com/320/240/headshot/?lock=1",
+      "isAdmin": false
     },
     {
       "name": "user2",
       "email": "user2@example.com",
-      "password": "12345678"
+      "password": "12345678",
+      "image": "https://loremflickr.com/320/240/headshot/?lock=2",
+      "isAdmin": false
     },
     {
       "name": "user3",
       "email": "user3@example.com",
-      "password": "12345678"
+      "password": "12345678",
+      "image": "https://loremflickr.com/320/240/headshot/?lock=3",
+      "isAdmin": false
+    },
+    {
+      "name": "root",
+      "email": "root@example.com",
+      "password": "12345678",
+      "image": "https://loremflickr.com/320/240/headshot/?lock=4",
+      "isAdmin": true
     }
   ]
 }

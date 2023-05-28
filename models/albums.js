@@ -26,6 +26,10 @@ const albumSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  viewCount: {
+    type: Number,
+    default: 0
   }
 })
 

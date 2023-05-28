@@ -2,8 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const campSiteSchema = new Schema({
   id: {
-    type: Number,
-    required: true
+    type: Number
   },
   name: {
     type: String,
@@ -35,7 +34,8 @@ const campSiteSchema = new Schema({
   },
   category: {
     type: String,
-    enum: ['私人土地', '國家公園', '國家風景區', '國家森林遊樂區']
+    enum: ['私人土地', '國家公園', '國家風景區', '國家森林遊樂區'],
+    required: true
   },
   reservation: {
     type: String
@@ -59,6 +59,10 @@ const campSiteSchema = new Schema({
   isOpen: {
     type: Boolean,
     default: true
+  },
+  viewCount: {
+    type: Number,
+    default: 0
   }
 })
 

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "seed": "node models/seeds/categorySeeder.js && node models/campsiteSeeds/seeder.js && node models/seeds/seeder.js",
+    "seed": "node models/seeds/categorySeeder.js && node models/seeds/campsiteSeeder.js && node models/seeds/seeder.js",
     "test": "mocha tests --exit --recursive --timeout 5000"
   },
   "dependencies": {

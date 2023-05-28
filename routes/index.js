@@ -2,14 +2,14 @@ const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
 const upload = require('../middleware/multer')
-const restController = require('../controllers/pages/restaurant-controller')
+const campsiteController = require('../controllers/pages/campsite-controller')
 const userController = require('../controllers/pages/user-controller')
-const commentController = require('../controllers/pages/comment-controller')
+const messageController = require('../controllers/pages/message-controller')
 const admin = require('./modules/admin')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
+// auth
 router.use('/admin', authenticatedAdmin, admin)
-
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
@@ -17,29 +17,21 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }))
 router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/users/login', successRedirect: '/' }))
 router.get('/logout', userController.logout)
-
-router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
-router.get('/restaurants/feeds', authenticated, restController.getFeeds)
-router.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
-router.get('/restaurants/:id', authenticated, restController.getRestaurant)
-router.get('/restaurants', authenticated, restController.getRestaurants)
-
-router.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
-router.post('/comments', authenticated, commentController.postComment)
-
-router.get('/users/top', authenticated, userController.getTopUsers)
+// campsite
+router.get('/campsites/top', campsiteController.getTopCampsites)
+router.get('/campsites/feeds', campsiteController.getFeeds)
+router.get('/campsites/:id', campsiteController.getCampsite)
+router.get('/campsites/create', authenticated, campsiteController.createCampsite)
+router.get('/campsites', campsiteController.getCampsites)
+router.post('/campsites', authenticated, upload.single('image'), campsiteController.postCampsite)
+// message
+router.post('/messages', authenticated, messageController.postMessage)
+// user
 router.get('/users/:id/edit', authenticated, userController.editUser)
-router.get('/users/:id', authenticated, userController.getUser)
+router.get('/users/:id', userController.getUser)
 router.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
-
-router.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
-router.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
-
-router.post('/like/:restaurantId', authenticated, userController.addLike)
-router.delete('/like/:restaurantId', authenticated, userController.removeLike)
-
-router.post('/following/:userId', authenticated, userController.addFollowing)
-router.delete('/following/:userId', authenticated, userController.removeFollowing)
-router.get('/', (req, res) => { return res.redirect('/restaurants') })
+router.post('/like/:id', authenticated, userController.addLike)
+router.delete('/like/:id', authenticated, userController.removeLike)
+router.get('/', (req, res) => { return res.redirect('/campsites') })
 router.use('/', generalErrorHandler)
 module.exports = router
