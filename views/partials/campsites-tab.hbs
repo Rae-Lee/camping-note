@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs mb-4">
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'index'}}active{{/ifCond}}" href="/campsites">首頁</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'feeds'}}active{{/ifCond}}" href="/campsites/feeds">最新相簿</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'topAlbums'}}active{{/ifCond}}" href="/albums/top">人氣相簿</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'topCampsites'}}active{{/ifCond}}" href="/campsites/top">Top 10 人氣露營區</a>
+  </li>
+</ul>

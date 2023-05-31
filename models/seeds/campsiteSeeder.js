@@ -32,7 +32,8 @@ db.once('open', async () => {
         publicTransport: faker.lorem.text(),
         isLegal: campsite['違反相關法規'] ? 0 : 1,
         isPublicOwm: campsite['公有合法'] ? 1 : 0,
-        isOpen: campsite['營業狀態'] === '營業中' ? 1 : 0
+        isOpen: campsite['營業狀態'] === '營業中' ? 1 : 0,
+        viewCount: Math.floor(Math.random() * 110) + 1300
       })
     }
     process.exit()

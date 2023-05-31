@@ -1,0 +1,167 @@
+<div class="row mb-5">
+  <div class="col-md-12">
+    <h1 class="mb-3">{{campsite.name}}</h1>
+    <p style="color:gray"> {{campsite.ratings}}評分 | {{campsite.category}} | {{campsite.viewCount}}次點閱</p>
+  </div>
+  <hr class="mb-5">
+  <div class="col-md-5" >
+    <img class="img-responsive center-block mb-5" src="{{campsite.image}}"
+      style="width: 350px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;">
+    <div class="well">
+      <table class="table mb-5" style=" border-spacing: 15px 15px; table-layout: fixed;">
+        <tbody>
+          <tr>
+            <td style="width:100px"><strong>所在縣市:</strong></td>
+            <td>{{campsite.country}}{{campsite.town}}</td>
+          </tr>
+          <tr>
+            <td><strong>電話:</strong></td>
+            <td>{{campsite.phone}}</td>
+          </tr>
+          <tr>
+            <td><strong>地址:</strong></td>
+            <td>{{campsite.location}}</td>
+          </tr>
+          <tr>
+            <td><strong>網站:</strong></td>
+            <td><a href="{{campsite.website}}">點選</a></td>
+          </tr>
+          <tr>
+            <td><strong>合法:</strong></td>
+            <td>{{#if campsite.isLegal}}是{{else}}否{{/if}}</td>
+          </tr>
+          <tr>
+            <td><strong>公有:</strong></td>
+            <td>{{#if campsite.isPublicOwn}}是{{else}}否{{/if}}</td>
+          </tr>
+          <tr>
+            <td><strong>營業中:</strong></td>
+            <td>{{#if campsite.isOpen}}是{{else}}否{{/if}}</td>
+          </tr>
+        </tbody>
+      </table>
+      {{#if like}}
+      <form action="/like/{{campsite._id}}?_method=DELETE" method="POST" style="display: contents;">
+        <button type="submit" class="btn btn-danger mb-5">收回喜愛</button>
+      </form>
+      {{else}}
+      <form action="/like/{{campsite._id}}" method="POST" style="display: contents;">
+        <button type="submit" class="btn btn-primary mb-5">喜愛</button>
+        <a class="btn btn-outline-secondary mb-5" href="javascript:history.back()">返回</a>
+      </form>
+      {{/if}}
+    </div>
+  </div>
+  <div class="col-md-7">
+    <p style="white-space: break-spaces;">{{campsite.description}}</p>
+    <h5 style="white-space: break-spaces;" class="mt-5">附近景點</h5>
+    <p style="white-space: break-spaces;">{{campsite.attraction}}</p>
+    <h5 style="white-space: break-spaces;" class="mt-5">預訂方式</h5>
+    <p style="white-space: break-spaces;">{{campsite.reservation}}</p>
+    <h5 style="white-space: break-spaces;" class="mt-5">營位價格</h5>
+    <p style="white-space: break-spaces;">{{campsite.price}}</p>
+    <h5 style="white-space: break-spaces;" class="mt-5">開車路線</h5>
+    <p style="white-space: break-spaces;">{{campsite.driving}}</p>
+    <h5 style="white-space: break-spaces;" class="mt-5">大眾運輸方式</h5>
+    <p style="white-space: break-spaces;">{{campsite.publicTransport}}</p>
+  </div>
+  <hr class="mt-5">
+</div>
+{{!-- album --}}
+<h3 class="mb-5" >相關相簿：</h3>
+<div class="container ">
+  <div class="d-flex justify-content-start flex-wrap">
+    {{#each albums}}
+    <a href="/albums/{{this._id}}" style="text-decoration: none;">
+      <div class="">
+        <div class="card me-2 my-2" style="width: 18rem;">
+          <img src="{{this.cover}}" class="card-img-top" alt="...">
+          <div class="card-body">
+
+            <span class="card-title">{{this.name}}</span>
+
+            <div class="card-text d-flex justify-content-between mt-5">
+              <div style="color:gray;">{{this.userProfile.name}}</div>
+              <div style="color:gray;"><span style="font-weight:bold;">{{relativeTimeFromNow this.createdAt}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    {{/each}}
+  </div>
+</div>
+<hr class="mb-5 mt-5">
+{{!-- add message --}}
+<h3 class="mb-5">所有評論：</h3>
+<form action="/messages" method="POST" class="mb-5">
+  <div class="form-row mb-3">
+      <div><label class="form-label" for="text">留下評論：</label></div>
+    <fieldset class="rating mb-3">
+      <input type="radio" id="star5" name="rating" value="5"><label class="full" for="star5"
+        title="Awesome - 5 stars"></label>
+      <input type="radio" id="star4" name="rating" value="4"><label class="full" for="star4"
+        title="Pretty good - 4 stars"></label>
+      <input type="radio" id="star3" name="rating" value="3"><label class="full" for="star3"
+        title="Meh - 3 stars"></label>
+      <input type="radio" id="star2" name="rating" value="2"><label class="full" for="star2"
+        title="Kinda bad - 2 stars"></label>
+      <input type="radio" id="star1" name="rating" value="1"><label class="full" for="star1"
+        title="Sucks big time - 1 star"></label>
+    </fieldset>
+    <textarea class="form-control" id="text" name="text" rows="3"></textarea>
+  </div>
+  <input type="hidden" name="campsiteId" value="{{campsite._id}}" />
+  <button type="submit" class="btn btn-primary">提交</button>
+</form>
+
+{{!-- Message --}}
+{{#each messages}}
+{{!-- {{#if ../user.isAdmin}}
+<form action="/messages/{{this.id}}?_method=DELETE" method="POST" class="float-end">
+  <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+{{/if}} --}}
+<blockquote class="blockquote mb-0 d-flex">
+  <a href="/users/{{this.userProfile._id}}">
+  <img src="{{this.userProfile.image}}" style="border-radius:50%; width:60px; height:60px">
+  </a>
+  <div class="ms-4">
+    <h4><a href="/users/{{this.userProfile._id}}" style="text-decoration: none">
+    {{this.user}}
+    </a></h4>
+    {{!-- rating stars --}}
+    {{#ifCompute this.rating 1 }}
+    <i class="fa-solid fa-star" style="color: #fdcf2b;"></i>
+    {{else}}
+    <i class="fa-solid fa-star" style="color: #b7bdc8;"></i>
+    {{/ifCompute}}
+    {{#ifCompute this.rating 2 }}
+    <i class="fa-solid fa-star" style="color: #fdcf2b;"></i>
+    {{else}}
+    <i class="fa-solid fa-star" style="color: #b7bdc8;"></i>
+    {{/ifCompute}}
+    {{#ifCompute this.rating 3 }}
+    <i class="fa-solid fa-star" style="color: #fdcf2b;"></i>
+    {{else}}
+    <i class="fa-solid fa-star" style="color: #b7bdc8;"></i>
+    {{/ifCompute}}
+    {{#ifCompute this.rating 4 }}
+    <i class="fa-solid fa-star" style="color: #fdcf2b;"></i>
+    {{else}}
+    <i class="fa-solid fa-star" style="color: #b7bdc8;"></i>
+    {{/ifCompute}}
+    {{#ifCompute this.rating 5 }}
+    <i class="fa-solid fa-star" style="color: #fdcf2b;"></i>
+    {{else}}
+    <i class="fa-solid fa-star" style="color: #b7bdc8;"></i>
+    {{/ifCompute}}
+    <p>{{this.description}}</p>
+    <footer class="blockquote-footer">{{relativeTimeFromNow this.createdAt}}</footer>
+  </div>
+</blockquote>
+<hr />
+{{/each}}
+{{!-- pagination --}}
+{{> messages-pagination }}

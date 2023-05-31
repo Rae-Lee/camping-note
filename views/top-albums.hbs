@@ -1,0 +1,25 @@
+{{> campsites-tab route='topAlbums'}}
+<h1>人氣相簿</h1>
+<hr class="mb-5"/>
+<div class="container" >
+  <div class="d-flex justify-content-start flex-wrap">
+  {{#each albums}}
+  <a href="/albums/{{this._id}}" style="text-decoration: none;">
+  <div class="">
+  <div class="card mx-2 my-2" style="width: 18rem;">
+    <img src="{{this.cover}}" class="card-img-top" alt="cover">
+    <div class="card-body">
+      
+      <span class="card-title" >{{this.name}}</span>
+     
+      <div class="card-text d-flex justify-content-between mt-5">
+        <div style="color:gray;">{{this.userProfile.name}}</div>
+        <div style="color:gray;"><span style="font-weight:bold;">{{this.viewCount}}</span> 次點閱</div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </a>
+  {{/each}}
+  </div>
+</div>

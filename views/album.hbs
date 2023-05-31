@@ -1,0 +1,14 @@
+<div class="container row">
+  <div class="col-8" style="margin:0 auto">
+  <h1 class="mb-3">{{album.name}}</h1>
+  <p style="color:gray"> {{album.viewCount}}次點閱</p>
+    <hr class="mb-5">
+  <img src="{{album.cover}}" style="width:100%;" class="mb-5">
+  <div class="d-flex justify-content-center flex-wrap">
+    {{#each album.photo}}
+        <img src="{{this}}"  alt="photo" class="me-3 mb-3" width="30%">
+      {{/each}}
+  </div>
+  {{!-- pagination --}}
+  {{> photo-pagination }}
+</div>

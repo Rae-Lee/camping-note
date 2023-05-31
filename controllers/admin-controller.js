@@ -1,10 +1,10 @@
 const Campsite = require('../models/campsites')
 const User = require('../models/users')
 const Category = require('../models/categories')
-const campsiteServices = require('../services/campsite-services')
-const categoryServices = require('../services/category-services')
-const messageServices = require('../services/message-services')
-const albumServices = require('../services/album-services')
+const campsiteServices = require('../services/campsite-service')
+const categoryServices = require('../services/category-service')
+const messageServices = require('../services/message-service')
+const albumServices = require('../services/album-service')
 const { imgurFileHandler } = require('../helpers/file-helpers')
 const { getPagination } = require('../helpers/pagination-helper')
 
@@ -37,7 +37,7 @@ const adminController = {
   },
   postCampsite: async (req, res, next) => {
     try {
-      await campsiteServices.posCampsite(req)
+      await campsiteServices.postCampsite(req)
       req.flash('success_messages', 'Campsite was successfully created') // 在畫面顯示成功提示
       return res.redirect('/admin/campsites') // 新增完成後導回後台首頁
     } catch (err) {

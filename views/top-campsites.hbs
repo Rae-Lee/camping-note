@@ -1,0 +1,35 @@
+{{> campsites-tab route='topCampsites'}}
+<h1 >Top 10 人氣露營區</h1>
+<hr class="mb-5">
+{{#each campsites}}
+<div class="card mb-5 shadow-sm m-auto" style="width: 60rem;height:240px">
+  <div class="d-flex">
+  <div class="w-25 position-relative" style="height:125px;">  
+   <img src="{{this.image}}" class="card-img-left" style="object-fit:cover;height: 240px; width: 240px;" alt="campsites image">
+  </div>
+  <div style="border-radius:50%; width:50px; height:50px; background-color: rgb(213, 200, 17); border:5px solid white; color:white; font-weight:bold; top:200px; left:-30px" class="position-absolute px-2 py-2"><span class="width:3px">{{this.rate}}</span></div>
+  <div class="m-3 p-3" >
+    <div class="d-flex justify-content-between" style=" width:40rem">
+    <a href="/campsites/{{this._id}}" style="text-decoration: none">{{this.name}}</a>
+    <p>
+     <div style="color:gray">
+      <h5 class="mb-1">{{this.viewCount}}</h5>
+      <div style="font-size:12px" class="ms-2">次觀看</div>
+    </div>
+    </div>
+    </p>
+    <p class="mb-3" style="height:60px">{{this.description}}</p>
+      <a href="/campsites/{{this._id}}" role="button" class="btn btn-outline-primary" >顯示</a>
+      {{#if this.like }}
+    <form action="/like/{{this._id}}?_method=DELETE" method="POST" style="display: contents;">
+      <button type="submit" class="btn btn-danger">移除喜愛</button>
+    </form>
+    {{else}}
+    <form action="/like/{{this._id}}" method="POST" style="display: contents;">
+      <button type="submit" class="btn btn-primary">喜愛</button>
+    </form>
+    {{/if}}
+  </div>
+  </div>
+</div>
+{{/each}}

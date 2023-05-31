@@ -32,21 +32,23 @@ db.once('open', async () => {
         }
         for (let i = 0; i < campsitesQuantity; i++) {
           albums.push({
-            name: faker.string.alpha(10),
+            name: faker.lorem.lines(1),
             userId: data._id,
             campsiteId: campsites[i],
-            description: faker.lorem.lines(1),
-            photo
+            description: faker.lorem.text(),
+            cover: `https://loremflickr.com/320/240/tent,flower/?random=${Math.random() * 2000}`,
+            photo,
+            viewCount: Math.floor(Math.random() * 400) + 100
           })
         }
         await Album.create(albums)
         console.log('album done')
         // 新增訊息種子資料
         const messages = []
-        const rating = [3.5, 4, 4.5, 5]
+        const rating = [3, 4, 5]
         for (let i = 1; i <= (campsitesQuantity / 2); i++) {
           messages.push({
-            userId: data.name,
+            user: data.name,
             campsiteId: campsites[Math.floor(Math.random() * campsitesQuantity)],
             description: faker.lorem.lines(2),
             rating: rating[Math.floor(Math.random() * rating.length)]
