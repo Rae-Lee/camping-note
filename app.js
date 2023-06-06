@@ -17,21 +17,23 @@ const port = process.env.PORT || 3000
 require('./config/mongoose.js')
 app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
-app.use(methodOverride('_method'))
-app.use('/upload', express.static(path.join(__dirname, 'upload')))// 建立虛擬路徑字首
-app.use(routes)
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')  // 設定 success_msg 訊息
-  res.locals.error_messages = req.flash('error_messages')  // 設定 warning_msg 訊息
+  res.locals.error_messages = req.flash('error_messages')  // 設定 error_msg 訊息
+  res.locals.warning_messages = req.flash('warning_messages') 
   res.locals.user = getUser(req)
   next()
 })
+app.use(methodOverride('_method'))
+app.use('/upload', express.static(path.join(__dirname, 'upload')))// 建立虛擬路徑字首
+app.use(routes)
+
 
 app.listen(port, () => {
   console.info(`Example app listening on port ${port}!`)

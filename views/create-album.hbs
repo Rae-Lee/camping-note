@@ -1,0 +1,96 @@
+<div style="width: 960px;margin: auto;">
+  <h5 class="mb-3">建立相簿</h5>
+  <hr class="mb-5">
+  <div class="alert"></div>
+</div>
+<form action="/albums" method="POST" enctype="multipart/form-data">
+  {{> album-form}}
+</form>
+<script>
+  const nameAlert = document.querySelector('.name-alert')
+   const descriptionAlert = document.querySelector('.description-alert')
+   const name = document.querySelector('#name')
+   const description = document.querySelector('#description')
+   const campsiteInput = document.querySelector('#campsite')
+   const hidden = document.querySelector('#answerInput-hidden')
+   const photoArea = document.querySelector('.photo-area')
+   const photo = document.querySelector('#photoFile')
+    const avatar = document.querySelector('.avatar')
+   const addImage = document.querySelector('.addImage')
+   const photoFile = document.querySelector('.photo')
+   const submit = document.querySelector('.submit')
+   const alert = document.querySelector('.alert')
+   // 字數限制
+   name.addEventListener('input', e => {
+     const words = e.target.value.trim().length
+     if(words > 50){
+      nameAlert.innerText = '字數超出上限!'
+     }else{
+       nameAlert.innerText = `${words}/50字`
+     }
+   })
+    description.addEventListener('input', e => {
+        const words = e.target.value.trim().length
+        if (words > 300) {
+          nameAlert.innerText = '字數超出上限!'
+        } else {
+          descriptionAlert.innerText = `${words}/300字`
+        }
+    })
+ // 代入選擇的露營區id
+campsiteInput.addEventListener('input' ,e => {
+  const options = document.querySelectorAll('.option')
+  for(const option of options){
+    if(option.value === e.target.value){
+      hidden.value = option.getAttribute('data-value')
+      return
+    }
+  }
+})
+// 預覽圖片
+photo.addEventListener('change', e => {
+  const files = e.target.files
+  let url = ''
+  const dataTransfer = new DataTransfer()
+  // 將之前的檔案複製到新dataTransfer中
+  for (let i = 0; i < photoFile.files.length; i++){
+    dataTransfer.items.add(photoFile.files[i])
+  } 
+  //新增預覽圖片html
+  for(let i = 0; i < files.length; i++){
+     const reader = new FileReader()
+    reader.onload = () => {
+      photoArea.innerHTML += ` <div class="image-center m-3" number="${i}" style="width:30%";><img src="${reader.result}" alt="photo" class="avatar img-thumbnail" style = "object-fit:cover;height: 250px; width:100%"><h1><i class="fa-solid fa-trash-can icon" style="color: gray;"></i></h1></div>`
+    };
+    reader.readAsDataURL(files[i]) 
+     // 新增至dataTransfer中保留紀錄
+    dataTransfer.items.add(files[i])
+  }
+  //更換fileList檔案為dataTransfer
+  photoFile.files = dataTransfer.files
+}) 
+  addImage.addEventListener('change', e => {
+    avatar.src = window.URL.createObjectURL(e.target.files[0])
+  })
+  // 刪除圖片
+  photoArea.addEventListener('click', e => {
+    if(e.target.classList.contains ("fa-trash-can")){
+      //刪除預覽圖片html
+      const parent = e.target.parentElement.parentElement 
+      parent.remove()
+      // 將之前的檔案複製到新dataTransfer中
+       const dataTransfer = new DataTransfer()
+      for (let i = 0; i < photoFile.files.length; i++) {
+        dataTransfer.items.add(photoFile.files[i])
+      } 
+      //把圖片從dataTransfer中刪除
+      dataTransfer.items.remove(parent.getAttribute('number'))
+     //更換fileList檔案為dataTransfer
+      photoFile.files = dataTransfer.files
+    }    
+  })
+  // 等待圖示
+  submit.addEventListener('click', e => {
+    alert.innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert">waiting...</div>'
+  })
+</script>

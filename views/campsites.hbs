@@ -65,7 +65,7 @@
         <div class="d-flex justify-content-between">
           {{#if this.like}}
           <form action="/like/{{this._id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-danger m-1">Unlike</button>
+            <button type="submit" class="btn btn-danger m-1">已喜愛</button>
           </form>
           {{else}}
           <form action="/like/{{this._id}}" method="POST">

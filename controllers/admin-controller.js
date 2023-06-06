@@ -101,6 +101,7 @@ const adminController = {
       campsite.isPublicOwn = isPublicOwn
       campsite.isOpen = isOpen
       campsite.image = filePath
+      await campsite.save()
       req.flash('success_messages', 'Campsite was successfully to update')
       return res.redirect('/admin/campsites')
     } catch (err) {
@@ -110,9 +111,8 @@ const adminController = {
   deleteCampsite: async (req, res, next) => {
     try {
       const campsiteId = req.params.id
-      const campsite = await Campsite.findById(campsiteId)
-      if (!campsite) throw new Error("Campsite doesn't exist!")
-      await campsite.remove()
+      const del = await Campsite.deleteOne({ _id: campsiteId })
+      if (!del.deletedCount) throw new Error("Campsite doesn't exist!")
       req.flash('success_messages', 'Campsite was been deleted')
       return res.redirect('/admin/campsites')
     } catch (err) {

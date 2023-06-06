@@ -125,7 +125,7 @@
 {{/if}} --}}
 <blockquote class="blockquote mb-0 d-flex">
   <a href="/users/{{this.userProfile._id}}">
-  <img src="{{this.userProfile.image}}" style="border-radius:50%; width:60px; height:60px">
+  <img {{#if this.userProfile.image}}src="{{this.userProfile.image}}"{{else}}src="https://fakeimg.pl/150/?text=photo"{{/if}} style="border-radius:50%; width:60px; height:60px">
   </a>
   <div class="ms-4">
     <h4><a href="/users/{{this.userProfile._id}}" style="text-decoration: none">

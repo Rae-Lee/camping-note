@@ -1,10 +1,12 @@
 const Campsite = require('../models/campsites')
 const Category = require('../models/categories')
+const User = require('../models/users')
 const Message = require('../models/messages')
 const bigDecimal = require('js-big-decimal')
 const { getOffset } = require('../helpers/pagination-helper')
 const { getUser } = require('../helpers/auth-helpers')
 const { imgurFileHandler } = require('../helpers/file-helpers')
+const { listenerCount } = require('../models/albums')
 const campsiteService = {
   getCampsites: async req => {
     const DEFAULT_LIMIT = 9
@@ -22,10 +24,16 @@ const campsiteService = {
       .skip(offset)
       .lean()
     // check user like campsite or not
-    const likes = getUser(req) ? getUser(req).like : []
+    let likes = []
+    if (getUser(req)) {
+      const user = await User.findById(getUser(req)._id.valueOf())
+      likes = user.like
+      // console.log(likes)
+    }
     const result = []
     for (const campsite of campsites) {
       const like = likes.includes(campsite._id)
+      // console.log(like)
       // check ratings
       let ratings = 0
       const messages = await Message.find({ campsiteId: campsite._id }) || []

@@ -47,3 +47,13 @@
 .rating>input:checked~label:hover~label {
   color: #FFED85;
 }
+/* avatar icon */
+.image-center{
+  position:relative;
+}
+.image-center i {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}

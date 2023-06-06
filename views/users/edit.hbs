@@ -1,11 +1,39 @@
-<form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
-  <div class="form-row mb-3">
-    <label class="form-label" for="name">Name</label>
-    <input class="form-control" type="text" name="name" id="name" placeholder="Enter name" value="{{user.name}}">
+<div style="width: 960px;margin: auto;">
+  <h5 class="mb-3">編輯個人檔案</h5>
+  <hr class="mb-5">
+    <div class="alert"></div>
+</div>
+<form action="/users/{{user._id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+  <div class="container d-flex" style="width: 960px; height: 240px; margin: auto; background:white; position:relative;">
+    <div class="w-25 h-100">
+      <img {{#if user.image}}src="{{user.image}}"{{else}}src="https://fakeimg.pl/150/?text=大頭照&font=noto"{{/if}} class="img-thumbnail avatar" style="object-fit:cover;height: 100%; width: 100%;position:relative;" alt="user-image">
+      <label class="form-label icon" for="image">
+        <h1 class="" style="position:absolute; top:100px;left:100px;" ><i class="fa-solid fa-circle-plus" style="color: #3996f3;"></i>
+        </h1>
+      </label>
+        <input class="form-control addImage" type="file"  id="image" name="image" style="display:none">
+    </div>
+    <div class="m-4" >
+      <label class="form-label" for="name">姓名</label>
+      <input class="form-control" type="text" name="name" id="name" placeholder="Enter name" value="{{user.name}}">  
+      <label class="form-label mt-3" for="email">信箱</label>
+      <input class="form-control" type="email" name="email" id="email" placeholder="Enter name" value="{{user.email}}">
+      <button type="submit" class="btn btn-primary submit" style="position: absolute; bottom:10%; right:10%">儲存</button>
+    </div>
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="image">Image</label>
-    <input class="form-control" type="file" class="form-control-file" id="image" name="image">
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<script>
+  const avatar = document.querySelector('.avatar')
+  const addImage = document.querySelector('.addImage')
+   const submit = document.querySelector('.submit')
+    const alert = document.querySelector('.alert')
+   addImage.addEventListener('change', e => {
+      avatar.src = window.URL.createObjectURL(e.target.files[0])
+   }
+  )
+  // 等待圖示
+    submit.addEventListener('click', e => {
+      alert.innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert">waiting...</div>'
+    })
+</script>

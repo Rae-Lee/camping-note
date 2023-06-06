@@ -8,9 +8,9 @@ const messageService = {
     const page = Number(req.query.page) || 1
     const offset = getOffset(DEFAULT_LIMIT, page)
     const messages = await Message.find({ campsiteId })
-    .limit(DEFAULT_LIMIT)
-    .skip(offset)
-    .lean()
+      .limit(DEFAULT_LIMIT)
+      .skip(offset)
+      .lean()
     const result = []
     for (const message of messages) {
       const userProfile = await User.findOne({ name: message.user }).lean()

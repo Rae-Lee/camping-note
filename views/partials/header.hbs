@@ -15,16 +15,45 @@
           </li>
           {{/if}}
           <li class="nav-item d-inline-flex align-items-center">
-            <span class="text-white nav-link">Hi, {{ user.email }}</span>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle me-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                我要分享
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/albums/create">建立相簿</a></li>
+                <li><a class="dropdown-item" href="/campsites/create">新增露營區</a></li>
+              </ul>
+            </div>
           </li>
-          <li class="nav-item d-inline-flex align-items-center">
-            <a href="/users/{{ user.id }}" class="nav-link">個人檔案</a>
-          </li>
-          <li class="nav-item">
-            <a href="/logout"><button class="btn btn-outline-success my-sm-0 my-2">登出</button></a>
+          <li class="nav-item d-inline-flex align-items-center me-3">
+            <div class="dropdown">
+              <img {{#if user.image}}src="{{user.image}}" {{else}}src="https://fakeimg.pl/150/?text=photo" {{/if}}
+                style="border-radius:50%; width:40px; height:40px" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/users/{{user._id}}">個人檔案</a></li>
+                <li><a class="dropdown-item" href="/logout">登出</a></li>
+              </ul>
+            </div>
           </li>
         </ul>
       </div>
+      {{else}}
+      <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+      <li class="nav-item">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle me-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          我要分享
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/albums/create">建立相簿</a></li>
+          <li><a class="dropdown-item" href="/campsites/create">新增露營區</a></li>
+        </ul>
+      </div>
+      </li>
+      <li class="nav-item">
+        <a href="/signin"><button class="btn btn-outline-success my-sm-0 my-2">登入</button></a>
+      </li>
+      </ul>
       {{/if}}
     </div>
   </nav>
