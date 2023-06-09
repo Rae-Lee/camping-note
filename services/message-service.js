@@ -8,6 +8,7 @@ const messageService = {
     const page = Number(req.query.page) || 1
     const offset = getOffset(DEFAULT_LIMIT, page)
     const messages = await Message.find({ campsiteId })
+      .sort([['createdAt', 'desc']])
       .limit(DEFAULT_LIMIT)
       .skip(offset)
       .lean()

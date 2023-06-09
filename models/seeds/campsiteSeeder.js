@@ -16,7 +16,7 @@ db.once('open', async () => {
       await Campsite.create({
         id: campsite['編號'],
         name: campsite['露營場名稱'],
-        country: campsite['縣市別'],
+        county: campsite['縣市別'],
         town: campsite['鄉/鎮/市/區'],
         location: campsite['地址'],
         phone: campsite['電話'],

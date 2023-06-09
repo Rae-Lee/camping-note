@@ -1,25 +1,45 @@
+{{!-- search --}}
+<div class="px-2.5 py-2 space-y-2">
+  <div id="filter_trail" class=" "style="color:gray">
+    <div class="d-flex py-2.5">
+      <div class="mb-3">
+        <form class="keyword-search" style="position:relative" id="keyword_search" action="/campsites/search" >
+          <input type="text" class="form-control"id="keyword_input" placeholder="露營區/縣市鄉鎮 "name="keyword" >
+          <button type="submit" style="position:absolute; top:10%;right:3%; background-color:white; border:0px">
+          <i class="fa-solid fa-magnifying-glass" style="color: gray;"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {{!-- tab --}}
 {{> campsites-tab route='index'}}
 {{!-- 分類tab --}}
 <ul class="nav nav-pills">
   <li class="nav-item">
-    <a class="nav-link {{#ifCond '' categoryId}}active{{/ifCond}}" href="?categoryId=">全部</a>
+    <a class="nav-link {{#ifCond '' categoryId}}active{{/ifCond}}" href="/campsites?categoryId=">全部</a>
   </li>
   {{#each categories}}
   <li class="nav-item">
     <a class="nav-link {{#ifType this._id ../categoryId}}active{{/ifType}}"
-      href="?categoryId={{this._id}}" >{{this.name}}</a>
+      href="/campsites?categoryId={{this._id}}" >{{this.name}}</a>
   </li>
   {{/each}}
 </ul>
+{{#unless campsites}}
+<div class="container text-center" style="height:fit-content mt-5 py-5">
+<h1 class="mt-5 pt-5"><i class="fa-solid fa-circle-exclamation"></i></h1>
+<span>找不到相關資料，請更換其他條件試試！</span>
+</div>
+{{/unless}}
 {{!-- 餐廳卡片 --}}
 <div class="row mt-3">
   {{#each campsites}}
   <div class="col-md-4">
     <div class="card mb-4 shadow-sm">
       <a href="/campsites/{{this._id}}">
-        <img class="card-img-top img-fluid" src="{{this.image}}" alt="Card image cap" width="286px" height="180px"
-          style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;">
+        <img class="card-img-top img-fluid" src="{{this.image}}" alt="Card image cap"        style="transition: opacity 0.5s; opacity:0; object-fit:cover; height:250px; width:100%;" onload="this.style.opacity=1;">
       </a>
       <div class="card-body">
         <p class="card-text">
@@ -28,8 +48,12 @@
           </a>
         </p>
         <span class="badge bg-secondary">{{this.category}}</span>
-        <span class="badge bg-secondary">{{this.country}}</span>
+        <a href="/campsites/search?keyword={{this.county}}"style="text-decoration:none;">
+        <span class="badge bg-secondary">{{this.county}}</span>
+        </a>
+        <a href="/campsites/search?keyword={{this.town}}" style="text-decoration:none;">
         <span class="badge bg-secondary">{{this.town}}</span>
+        </a>
         <div class="d-flex mt-3">
         <p class="card-text text-truncate me-3">{{this.ratings}}</p>
         {{!-- rating stars --}}
@@ -80,4 +104,8 @@
   {{/each}}
 </div>
 {{!-- pagination --}}
+{{#if keyword}}
+{{> search-pagination }}
+{{else}}
 {{> campsites-pagination }}
+{{/if}}

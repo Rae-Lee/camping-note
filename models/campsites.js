@@ -8,7 +8,7 @@ const campSiteSchema = new Schema({
     type: String,
     required: true
   },
-  country: {
+  county: {
     type: String,
     required: true
   },

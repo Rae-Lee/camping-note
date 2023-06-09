@@ -20,8 +20,9 @@ router.get('/facebook/callback', passport.authenticate('facebook', { failureRedi
 router.get('/logout', userController.logout)
 // campsite
 router.get('/campsites/top', campsiteController.getTopCampsites)
-router.get('/campsites/:id', campsiteController.getCampsite)
+router.get('/campsites/search', campsiteController.getSearch)
 router.get('/campsites/create', authenticated, campsiteController.createCampsite)
+router.get('/campsites/:id', campsiteController.getCampsite)
 router.get('/campsites', campsiteController.getCampsites)
 router.post('/campsites', authenticated, upload.single('image'), campsiteController.postCampsite)
 // album

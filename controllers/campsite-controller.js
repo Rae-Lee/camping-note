@@ -5,6 +5,7 @@ const albumServices = require('../services/album-service')
 const { getPagination } = require('../helpers/pagination-helper')
 const Category = require('../models/categories')
 const Campsite = require('../models/campsites')
+
 const campsiteController = {
   getCampsites: async (req, res, next) => {
     try {
@@ -22,6 +23,29 @@ const campsiteController = {
         campsites,
         categories,
         categoryId,
+        pagination: getPagination(DEFAULT_LIMIT, page, count)
+      })
+    } catch (err) {
+      next(err)
+    }
+  },
+  getSearch: async (req, res, next) => {
+    try {
+      const DEFAULT_LIMIT = 9
+      const page = Number(req.query.page) || 1
+      const keyword = req.query.keyword
+      const selectParams = { $or: [{ name: { $regex: keyword, $options: 'i' } }, { county: { $regex: keyword, $options: 'i' } }, { town: { $regex: keyword, $options: 'i' } }] }
+      if (!keyword) {
+        return res.redirect('/')
+      }
+      const campsites = await campsiteServices.getSearch(req)
+      const categories = await categoryServices.getCategories()
+      const count = await campsiteServices.getCount(selectParams)
+      return res.render('campsites', {
+        campsites,
+        categories,
+        categoryId: '',
+        keyword,
         pagination: getPagination(DEFAULT_LIMIT, page, count)
       })
     } catch (err) {
@@ -74,7 +98,8 @@ const campsiteController = {
   createCampsite: async (req, res, next) => {
     try {
       const categories = await categoryServices.getCategories()
-      return res.render('create-campsite', { categories })
+      const district = ['臺北市', '新北市', '桃園市', '臺中市', '臺南市', '高雄市', '宜蘭縣', '新竹縣', '苗栗縣', '彰化縣', '南投縣', '雲林縣', '嘉義縣', '屏東縣', '花蓮縣', '臺東縣', '澎湖縣', '基隆市', '新竹市', '嘉義市']
+      return res.render('create-campsite', { categories, district })
     } catch (err) {
       next(err)
     }
@@ -83,7 +108,7 @@ const campsiteController = {
     try {
       await campsiteServices.postCampsite(req)
       req.flash('success_messages', 'campsite was successfully created') // 在畫面顯示成功提示
-      return res.redirect('campsites') // 新增完成後導回後台首頁
+      return res.redirect('/campsites') // 新增完成後導回首頁
     } catch (err) {
       next(err)
     }

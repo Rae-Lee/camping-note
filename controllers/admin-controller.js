@@ -1,6 +1,7 @@
 const Campsite = require('../models/campsites')
 const User = require('../models/users')
 const Category = require('../models/categories')
+const Message = require('../models/messages')
 const campsiteServices = require('../services/campsite-service')
 const categoryServices = require('../services/category-service')
 const messageServices = require('../services/message-service')
@@ -13,10 +14,14 @@ const adminController = {
     try {
       const DEFAULT_LIMIT = 9
       const page = Number(req.query.page) || 1
-      const categoryId = Number(req.query.categoryId) || ''
+      const categoryId = req.query.categoryId || ''
+      let category
+      if (categoryId) {
+        category = await Category.findById(categoryId).lean()
+      }
       const campsites = await campsiteServices.getCampsites(req)
       const categories = await categoryServices.getCategories()
-      const count = await campsiteServices.getCount(categoryId ? { category: categoryId } : {})
+      const count = await campsiteServices.getCount(categoryId ? { category: category.name } : {})
       return res.render('admin/campsites', {
         campsites,
         categories,
@@ -27,10 +32,34 @@ const adminController = {
       next(err)
     }
   },
+  getSearch: async (req, res, next) => {
+    try {
+      const DEFAULT_LIMIT = 9
+      const page = Number(req.query.page) || 1
+      const keyword = req.query.keyword
+      const selectParams = { $or: [{ name: { $regex: keyword, $options: 'i' } }, { county: { $regex: keyword, $options: 'i' } }, { town: { $regex: keyword, $options: 'i' } }] }
+      if (!keyword) {
+        return res.redirect('/admin')
+      }
+      const campsites = await campsiteServices.getSearch(req)
+      const categories = await categoryServices.getCategories()
+      const count = await campsiteServices.getCount(selectParams)
+      return res.render('admin/campsites', {
+        campsites,
+        categories,
+        categoryId: '',
+        keyword,
+        pagination: getPagination(DEFAULT_LIMIT, page, count)
+      })
+    } catch (err) {
+      next(err)
+    }
+  },
   createCampsite: async (req, res, next) => {
     try {
       const categories = await Category.find().lean()
-      return res.render('admin/create-campsite', { categories })
+      const district = ['臺北市', '新北市', '桃園市', '臺中市', '臺南市', '高雄市', '宜蘭縣', '新竹縣', '苗栗縣', '彰化縣', '南投縣', '雲林縣', '嘉義縣', '屏東縣', '花蓮縣', '臺東縣', '澎湖縣', '基隆市', '新竹市', '嘉義市']
+      return res.render('admin/create-campsite', { categories, district })
     } catch (err) {
       next(err)
     }
@@ -54,7 +83,6 @@ const adminController = {
       const messages = await messageServices.getMessages(req)
       const count = await messageServices.getCount({ campsiteId })
       const albums = await albumServices.getAlbums(req)
-      campsite.viewCount++
       return res.render('campsite', {
         campsite,
         messages,
@@ -70,20 +98,24 @@ const adminController = {
       const campsite = await Campsite.findById(req.params.id).lean()
       const categories = await Category.find().lean()
       if (!campsite) throw new Error("Campsite doesn't exist!")
-      return res.render('admin/edit-restaurant', { campsite, categories })
+      const district = ['臺北市', '新北市', '桃園市', '臺中市', '臺南市', '高雄市', '宜蘭縣', '新竹縣', '苗栗縣', '彰化縣', '南投縣', '雲林縣', '嘉義縣', '屏東縣', '花蓮縣', '臺東縣', '澎湖縣', '基隆市', '新竹市', '嘉義市']
+      return res.render('admin/edit-campsite', { campsite, categories, district })
     } catch (err) {
       next(err)
     }
   },
   putCampsite: async (req, res, next) => {
     try {
-      const { name, country, town, location, googleMapWebsite, phone, website, category, reservation, price, description, attraction, feature, driving, publicTransport, isLegal, isPublicOwn, isOpen } = req.body
-      if (!name || !country || !town || !category || !req.file) throw new Error('Fields marked * are required!')
+      const { name, county, town, location, googleMapWebsite, phone, website, category, reservation, price, description, attraction, driving, publicTransport, isLegal, isPublicOwn, isOpen } = req.body
+      if (!name || !county || !town || !category || !reservation || !price || !description || !isLegal || !isPublicOwn || !isOpen) throw new Error('Fields marked * are required!')
       const campsite = await Campsite.findById(req.params.id)
       if (!campsite) throw new Error("Campsite doesn't exist!")
-      const filePath = await imgurFileHandler(req.file)
+      let filePath = ''
+      if (req.file) {
+        filePath = await imgurFileHandler(req.file)
+      }
       campsite.name = name
-      campsite.country = country
+      campsite.county = county
       campsite.town = town
       campsite.location = location
       campsite.googleMapWebsite = googleMapWebsite
@@ -94,13 +126,12 @@ const adminController = {
       campsite.price = price
       campsite.description = description
       campsite.attraction = attraction
-      campsite.feature = feature
       campsite.driving = driving
       campsite.publicTransport = publicTransport
       campsite.isLegal = isLegal
       campsite.isPublicOwn = isPublicOwn
       campsite.isOpen = isOpen
-      campsite.image = filePath
+      campsite.image = filePath || campsite.image
       await campsite.save()
       req.flash('success_messages', 'Campsite was successfully to update')
       return res.redirect('/admin/campsites')
@@ -136,9 +167,19 @@ const adminController = {
         req.flash('error_messages', '禁止變更 root 權限')
         return res.redirect('back')
       }
-      await user.update({ isAdmin: !user.isAdmin })
+      user.isAdmin = !user.isAdmin
+      await user.save()
       req.flash('success_messages', '使用者權限變更成功')
       return res.redirect('/admin/users')
+    } catch (err) {
+      next(err)
+    }
+  },
+  deleteMessage: async (req, res, next) => {
+    try {
+      const del = await Message.deleteOne({ _id: req.params.id })
+      if (!del.deletedCount) throw new Error("Comment didn't exist!")
+      return res.redirect('back')
     } catch (err) {
       next(err)
     }

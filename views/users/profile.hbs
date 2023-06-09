@@ -6,9 +6,11 @@
     <h5 >{{viewUser.name}}</h5>
     <p >{{viewUser.email}}
     </p>
+    {{#if user._id}}
     {{#ifType viewUser._id user._id}}
     <a href="/users/{{viewUser._id}}/edit" class="btn btn-primary">編輯</a>
     {{/ifType}}
+    {{/if}}
   </div>
 </div>
 {{!-- like campsites --}}

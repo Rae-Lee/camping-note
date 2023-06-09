@@ -4,17 +4,19 @@
   <p style="color:gray"> {{album.viewCount}}次點閱</p>
     <hr class="mb-3" >
     <div class="d-flex justify-content-end mb-5">
+      {{#if user._id}}
       {{#ifType album.userId user._id}}
       <a href="/albums/{{album._id}}/edit">
       <button class="btn btn-primary submit me-3" >編輯</button>
       </a>
       <form action="/albums/{{album._id}}?_method=DELETE"  method="POST">
-      <button type="submit" class="btn btn-secondary submit">刪除</button>
+      <button type="submit" class="btn btn-secondary submit" onclick="return confirm(`確定要刪除'{{album.name}}'相簿嗎？`)">刪除</button>
       </form>
       {{/ifType}}
+      {{/if}}
     </div>
   <img src="{{album.cover}}" class="avatar img-thumbnail mb-5" style="object-fit:cover;width:100%;height: 400px;">
-  <div class="d-flex justify-content-center flex-wrap">
+  <div class="d-flex justify-content-start flex-wrap">
     {{#each album.photo}}
         <img src="{{this}}"  alt="photo" class="me-3 mb-3" width="30%">
       {{/each}}

@@ -12,7 +12,7 @@
         <tbody>
           <tr>
             <td style="width:100px"><strong>所在縣市:</strong></td>
-            <td>{{campsite.country}}{{campsite.town}}</td>
+            <td>{{campsite.county}}{{campsite.town}}</td>
           </tr>
           <tr>
             <td><strong>電話:</strong></td>
@@ -40,16 +40,16 @@
           </tr>
         </tbody>
       </table>
-      {{#if like}}
+      {{#if campsite.like}}
       <form action="/like/{{campsite._id}}?_method=DELETE" method="POST" style="display: contents;">
-        <button type="submit" class="btn btn-danger mb-5">收回喜愛</button>
+        <button type="submit" class="btn btn-danger mb-5">已喜愛</button>
       </form>
       {{else}}
       <form action="/like/{{campsite._id}}" method="POST" style="display: contents;">
         <button type="submit" class="btn btn-primary mb-5">喜愛</button>
+        </form>
+        {{/if}}
         <a class="btn btn-outline-secondary mb-5" href="javascript:history.back()">返回</a>
-      </form>
-      {{/if}}
     </div>
   </div>
   <div class="col-md-7">
@@ -110,7 +110,7 @@
       <input type="radio" id="star1" name="rating" value="1"><label class="full" for="star1"
         title="Sucks big time - 1 star"></label>
     </fieldset>
-    <textarea class="form-control" id="text" name="text" rows="3"></textarea>
+    <textarea class="form-control" id="text" name="description" rows="3"></textarea>
   </div>
   <input type="hidden" name="campsiteId" value="{{campsite._id}}" />
   <button type="submit" class="btn btn-primary">提交</button>
@@ -118,11 +118,11 @@
 
 {{!-- Message --}}
 {{#each messages}}
-{{!-- {{#if ../user.isAdmin}}
-<form action="/messages/{{this.id}}?_method=DELETE" method="POST" class="float-end">
-  <button type="submit" class="btn btn-danger">Delete</button>
+{{#if ../user.isAdmin}}
+<form action="/admin/messages/{{this._id}}?_method=DELETE" method="POST" class="float-end">
+  <button type="submit" class="btn btn-danger" onclick="return confirm(`確定要刪除此留言嗎？`)">Delete</button>
 </form>
-{{/if}} --}}
+{{/if}}
 <blockquote class="blockquote mb-0 d-flex">
   <a href="/users/{{this.userProfile._id}}">
   <img {{#if this.userProfile.image}}src="{{this.userProfile.image}}"{{else}}src="https://fakeimg.pl/150/?text=photo"{{/if}} style="border-radius:50%; width:60px; height:60px">

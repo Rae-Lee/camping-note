@@ -1,6 +1,35 @@
 {{>admin-campsite-tab route='campsites'}}
+{{!-- search --}}
+<div class="px-2.5 py-2 space-y-2">
+  <div id="filter_trail" class="" style="color:gray">
+    <div class="d-flex py-2.5">
+      <div class="mb-3">
+        <form class="keyword-search" style="position:relative" id="keyword_search" action="/admin/campsites/search">
+          <input type="text" class="form-control" id="keyword_input" placeholder="露營區/縣市鄉鎮 " name="keyword">
+          <button type="submit" style="position:absolute; top:10%;right:3%; background-color:white; border:0px">
+            <i class="fa-solid fa-magnifying-glass" style="color: gray;"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- 分類tab --}}
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond '' categoryId}}active{{/ifCond}}" href="/admin/campsites?categoryId=">全部</a>
+  </li>
+  {{#each categories}}
+  <li class="nav-item">
+    <a class="nav-link {{#ifType this._id ../categoryId}}active{{/ifType}}"
+      href="/admin/campsites?categoryId={{this._id}}">{{this.name}}</a>
+  </li>
+  {{/each}}
+</ul>
+
+{{!-- 列表 --}}
 <a href='/admin/campsites/create'>
-  <button type="button" class="btn btn-primary">新增露營區</button>
+  <button type="button" class="btn btn-primary mt-5">新增露營區</button>
 </a>
 <br />
 <br />
@@ -14,6 +43,12 @@
     </tr>
   </thead>
   <tbody>
+    {{#unless campsites}}
+    <div class="container text-center" style="height:fit-content mt-5 mb-5 pb-5 py-5">
+      <h1 class="mt-5 pt-5"><i class="fa-solid fa-circle-exclamation"></i></h1>
+      <span class="mb-5 pb-5">找不到相關資料，請更換其他條件試試！</span>
+    </div>
+    {{/unless}}
     {{#each campsites}}
     <tr>
       <th scope="row">{{this._id}}</th>
@@ -21,7 +56,7 @@
       <td>{{this.category}}</td>
       <td>
         <button type="button" class="btn btn-link">
-          <a class="btn btn-link link-primary" href="/admin/campsites/{{this._id}}">
+          <a class="btn btn-link link-primary" href="/campsites/{{this._id}}">
             Show
           </a>
         </button>
