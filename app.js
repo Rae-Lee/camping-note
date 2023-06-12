@@ -11,7 +11,6 @@ const passport = require('./config/passport')
 const routes = require('./routes')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { getUser } = require('./helpers/auth-helpers')
-const SESSION_SECRET = process.env.SESSION_SECRET || 'MySecretName'
 const app = express()
 const port = process.env.PORT || 3000
 const MONGODB_URI = process.env.MONGODB_URI
@@ -21,7 +20,7 @@ app.set('view engine', 'hbs')
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(session({
-  secret: SESSION_SECRET,
+  secret: 'MySecretName',
   resave: false,
   saveUninitialized: false
 }))
