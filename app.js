@@ -17,13 +17,13 @@ const MONGODB_URI = process.env.MONGODB_URI
 require('./config/mongoose.js')
 app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
-app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.urlencoded({ extended: true }))
 app.use(session({
   secret: 'MySecretName',
   resave: false,
   saveUninitialized: false
 }))
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.urlencoded({ extended: true }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
