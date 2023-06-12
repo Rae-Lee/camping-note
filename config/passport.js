@@ -1,11 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const FacebookStrategy = require('passport-facebook').Strategy
 const bcrypt = require('bcryptjs')
 const User = require('../models/users')
-const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID
-const FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET
-const FACEBOOK_APP_CALLBACK = process.env.FACEBOOK_APP_CALLBACK
 // set up Passport strategy
 passport.use(new LocalStrategy(
   // customize user field
@@ -39,29 +35,4 @@ passport.deserializeUser((id, done) => {
     })
     .catch(err => done(err))
 })
-// facebook strategy
-passport.use(new FacebookStrategy(
-  {
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: FACEBOOK_APP_CALLBACK,
-    profileFields: ['displayName', 'email', 'picture']
-  }, (accessToken, refreshToken, profile, done) => {
-    const { name, email } = profile._json
-    User.findOne({ email })
-      .then(user => {
-        if (user) { return done(null, user) }
-        const password = Math.random().toString(36).slice(-8)
-        return bcrypt.genSalt(10)
-          .then(salt => bcrypt.hash(password, salt))
-          .then(hash => {
-            User.create({ name, email, password: hash})
-              .then(user => { return done(null, user) })
-              .catch(err => done(err))
-          })
-          .catch(err => done(err))
-      })
-      .catch(err => done(err))
-  }
-))
 module.exports = passport
