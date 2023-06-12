@@ -47,8 +47,7 @@ passport.use(new FacebookStrategy(
     callbackURL: FACEBOOK_APP_CALLBACK,
     profileFields: ['displayName', 'email', 'picture']
   }, (accessToken, refreshToken, profile, done) => {
-    const { name, email, picture } = profile._json
-    console.log(profile._json)
+    const { name, email } = profile._json
     User.findOne({ email })
       .then(user => {
         if (user) { return done(null, user) }
@@ -56,7 +55,7 @@ passport.use(new FacebookStrategy(
         return bcrypt.genSalt(10)
           .then(salt => bcrypt.hash(password, salt))
           .then(hash => {
-            User.create({ name, email, password: hash, image: picture.data.url })
+            User.create({ name, email, password: hash})
               .then(user => { return done(null, user) })
               .catch(err => done(err))
           })
