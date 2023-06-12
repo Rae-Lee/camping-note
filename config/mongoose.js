@@ -1,7 +1,8 @@
 // 連接資料庫
 const mongoose = require('mongoose')
 const dotenv = require('dotenv').config()
-mongoose.connect(process.env.MONGODB_URI)
+const MONGODB_URI = process.env.MONGODB_URI
+mongoose.connect(MONGODB_URI)
 const db = mongoose.connection
 db.on('error', () => {
   console.log('mongodb error')

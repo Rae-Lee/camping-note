@@ -3,6 +3,9 @@ const LocalStrategy = require('passport-local').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 const bcrypt = require('bcryptjs')
 const User = require('../models/users')
+const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID
+const FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET
+const FACEBOOK_APP_CALLBACK = process.env.FACEBOOK_APP_CALLBACK
 // set up Passport strategy
 passport.use(new LocalStrategy(
   // customize user field
@@ -39,9 +42,9 @@ passport.deserializeUser((id, done) => {
 // facebook strategy
 passport.use(new FacebookStrategy(
   {
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: process.env.FACEBOOK_APP_CALLBACK,
+    clientID: FACEBOOK_APP_ID,
+    clientSecret: FACEBOOK_APP_SECRET,
+    callbackURL: FACEBOOK_APP_CALLBACK,
     profileFields: ['displayName', 'email']
   }, (accessToken, refreshToken, profile, done) => {
     const { name, email } = profile._json
