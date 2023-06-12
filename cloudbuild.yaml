@@ -1,5 +1,5 @@
 steps:
-  - name: 'us.gcr.io/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'us.gcr.io/camping-note/dev:latest', '.' , '-f', 'Dockerfile']
-  - name: 'us.gcr.io/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us.gcr.io/camping-note/dev:latest']
