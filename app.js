@@ -7,12 +7,11 @@ const handlebars = require('express-handlebars')
 const flash = require('connect-flash')
 const methodOverride = require('method-override')
 const session = require('express-session')
-const MongoStore = require('connect-mongo')
 const passport = require('./config/passport')
 const routes = require('./routes')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { getUser } = require('./helpers/auth-helpers')
-const SESSION_SECRET = process.env.SESSION_SECRET
+const SESSION_SECRET = process.env.SESSION_SECRET || 'MySecretName'
 const app = express()
 const port = process.env.PORT || 3000
 const MONGODB_URI = process.env.MONGODB_URI
@@ -21,12 +20,11 @@ app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
-app.use(session({ 
-  secret: SESSION_SECRET, 
-  resave: false, 
-  saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: MONGODB_URI })
- }))
+app.use(session({
+  secret: SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
