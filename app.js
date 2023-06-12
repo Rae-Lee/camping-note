@@ -12,7 +12,7 @@ const passport = require('./config/passport')
 const routes = require('./routes')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { getUser } = require('./helpers/auth-helpers')
-const port = process.env.PORT || 8080
+const PORT = process.env.PORT || 8080
 const MONGODB_URI = process.env.MONGODB_URI
 require('./config/mongoose.js')
 app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
@@ -38,8 +38,8 @@ app.use(methodOverride('_method'))
 app.use('/upload', express.static(path.join(__dirname, 'upload')))// 建立虛擬路徑字首
 app.use(routes)
 
-app.listen(port, () => {
-  console.info(`Example app listening on port ${port}!`)
+app.listen(PORT, () => {
+  console.info(`Example app listening on port ${PORT}!`)
 })
 
 module.exports = app
