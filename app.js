@@ -12,7 +12,7 @@ const passport = require('./config/passport')
 const routes = require('./routes')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { getUser } = require('./helpers/auth-helpers')
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 8080
 const MONGODB_URI = process.env.MONGODB_URI
 require('./config/mongoose.js')
 app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
