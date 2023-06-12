@@ -1,4 +1,5 @@
 const express = require('express')
+const app = express()
 const path = require('path')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -11,7 +12,6 @@ const passport = require('./config/passport')
 const routes = require('./routes')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { getUser } = require('./helpers/auth-helpers')
-const app = express()
 const port = process.env.PORT || 3000
 const MONGODB_URI = process.env.MONGODB_URI
 require('./config/mongoose.js')
