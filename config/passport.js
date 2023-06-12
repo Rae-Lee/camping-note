@@ -47,6 +47,7 @@ passport.use(new FacebookStrategy(
     callbackURL: FACEBOOK_APP_CALLBACK,
     profileFields: ['displayName', 'email', 'photos']
   }, (accessToken, refreshToken, profile, done) => {
+    console.log(profile)
     const { name, email } = profile._json
     const { photos } = profile
     User.findOne({ email })
