@@ -3,10 +3,9 @@
   "version": "3.0.1",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "NODE_ENV=production && node app.js",
     "dev": "nodemon app.js",
-    "seed": "node models/seeds/categorySeeder.js && node models/seeds/campsiteSeeder.js && node models/seeds/seeder.js",
-    "test": "mocha tests --exit --recursive --timeout 5000"
+    "seed": "node models/seeds/categorySeeder.js && node models/seeds/campsiteSeeder.js && node models/seeds/seeder.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
