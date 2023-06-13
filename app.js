@@ -14,6 +14,7 @@ const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { getUser } = require('./helpers/auth-helpers')
 const PORT = process.env.PORT || 8080
 const MONGODB_URI = process.env.MONGODB_URI
+const GOOGLE_KEY = process.env.GOOGLE_KEY
 require('./config/mongoose.js')
 app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages') // 設定 error_msg 訊息
   res.locals.warning_messages = req.flash('warning_messages')
   res.locals.user = getUser(req)
+  res.locals.GOOGLE_KEY = GOOGLE_KEY
   next()
 })
 app.use(methodOverride('_method'))
