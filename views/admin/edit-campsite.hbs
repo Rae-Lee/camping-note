@@ -91,7 +91,7 @@
       '南竿鄉', '北竿鄉', '莒光鄉', '東引鄉'
     ]
   }
-  const country = document.querySelector('.country')
+  const county = document.querySelector('.county')
   const town = document.querySelector('.town')
   const avatar = document.querySelector('.avatar')
   const addImage = document.querySelector('.addImage')
@@ -101,9 +101,9 @@
     const name = document.querySelector('#name')
     const google_map = document.querySelector('#googleMapWebsite')
   // 縣市鄉鎮下拉選單
-  country.addEventListener('change', e => {
+  county.addEventListener('change', e => {
     town.innerHTML = ''
-    for (const location of area_data[country.value]) {
+    for (const location of area_data[county.value]) {
       town.innerHTML += `<option>${location}</option>`
     }
   })
@@ -111,7 +111,7 @@
     const child = e.target.firstElementChild
     if (child.classList.contains('default-town')) {
       town.innerHTML = ''
-      for (const location of area_data[country.value]) {
+      for (const location of area_data[county.value]) {
         town.innerHTML += `<option>${location}</option>`
       }
     }

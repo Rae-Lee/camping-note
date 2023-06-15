@@ -19,7 +19,6 @@ const adminController = {
         category = await Category.findById(categoryId).lean()
       }
       const campsites = await campsiteServices.getCampsites(req)
-      const categories = await categoryServices.getCategories()
       const count = await campsiteServices.getCount(categoryId ? { category: category.name } : {})
       return res.render('admin/campsites', {
         campsites,
