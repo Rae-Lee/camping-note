@@ -80,6 +80,29 @@ Click on the album to see album's photos.
 
 ### 2. Member side
 
+Log in and click on `sharing`.
+![](/public/stylesheets/add-button.PNG)
+
+#### Create albums
+
+Fill in the album's name and description, and add photos in it.
+![](/public/stylesheets/add-album.PNG)
+
+
+
+#### Create campsties
+
+Fill in the information for creating the campsite. 
+
+![](/public/stylesheets/add-campsite.PNG)
+
+Or search campsites by google map, the information will fill in automatically.
+
+![](/public/stylesheets/google-map.PNG)
+
+The administrator have the authority to edit the submitted data.
+
+
 ### 3. Administrator side
 
 Default administrator account:
