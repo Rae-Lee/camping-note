@@ -62,8 +62,8 @@ Click on the campsite to see more information.
 ![](/public/stylesheets/campsite.PNG)
 
 You can also browse other members' albums and messages about this campsite in the same page.
-Leave a message to rank the campsite or record thoughts if you log in. 
 ![](/public/stylesheets/relate-albums.PNG)
+Leave a message to rank the campsite or record thoughts if you log in. 
 ![](/public/stylesheets/messages.PNG)
 
 #### Album information
