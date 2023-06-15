@@ -36,10 +36,45 @@ Law data came from [政府資料開放平台](https://data.gov.tw/dataset/132066
 2. Member: Beside browsing, you can also share your camping experiences and photos after log in.
 3. Administrator: You can delete members' s messages, review added campsites member provided and edit information.
 
-### User side
-### Member side
+### 1. User side
 
-### Administrator side
+#### Homepage
+
+There are four tabs in homepage.(All, Feed albums, Hot albums, Top 10 campsites)
+
+Search for campsites or county/town or just click on the desired campingsites category in all tabs.
+
+Also click on the county or township tags to view campingsites in a specific region.
+![](/public/homepage.PNG)
+
+All campsites are arranged in order of view counts.
+
+In feed albums tab displays recently created albums, and the most viewed albums are displayed in hot albums tab.
+![](/public/feed-albums.PNG)
+
+Top 10 campsites leaderboard is in top 10 campsites tab.
+![](/public/top-campsites.PNG)
+
+
+#### Campsite information
+
+Click on the campsite to see more information.
+![](/public/campsite.PNG)
+
+You can also browse other members' albums and messages about this campsite in the same page.
+Leave a message to rank the campsite or record thoughts if you log in. 
+![](/public/relate-albums.PNG)
+![](/public/messages.PNG)
+
+#### Album information
+
+Click on the album to see album's photos.
+![](/public/album-title.PNG)
+![](/public/album-photo.PNG)
+
+### 2. Member side
+
+### 3. Administrator side
 
 Default administrator account:
 
