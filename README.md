@@ -40,19 +40,19 @@ Law data came from [政府資料開放平台](https://data.gov.tw/dataset/132066
 
 #### Homepage
 
-There are four tabs in homepage.(All, Feed albums, Hot albums, Top 10 campsites)
+There are four tabs in homepage.(`All`, `Feed albums`, `Hot albums`, `Top 10 campsites`)
 
-Search for campsites or county/town or just click on the desired campingsites category in all tabs.
+Search for campsites or county/town or just click on the desired campingsites category in `All` tabs.
 
-Also click on the county or township tags to view campingsites in a specific region.
+Also click on the county or township `tags` to view campsites in a specific region.
 ![](/public/stylesheets/homepage.PNG)
 
 All campsites are arranged in order of view counts.
 
-In feed albums tab displays recently created albums, and the most viewed albums are displayed in hot albums tab.
+In `Feed albums` tab displays recently created albums, and the most viewed albums are displayed in `Hot albums` tab.
 ![](/public/stylesheets/feed-albums.PNG)
 
-Top 10 campsites leaderboard is in top 10 campsites tab.
+Top 10 campsites leaderboard is in `Top 10 campsites` tab.
 ![](/public/stylesheets/top-campsites.PNG)
 
 
