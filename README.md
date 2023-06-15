@@ -32,11 +32,11 @@ Law data came from [政府資料開放平台](https://data.gov.tw/dataset/132066
 
 `camping-note` provides multiple identity verification:
 
-1. User: You can browse information in the website without registration.
-2. Member: Beside browsing, you can also share your camping experiences and photos after log in.
+1. Visitor: You can browse information in the website without registration.
+2. User: Beside browsing, you can also share your camping experiences and photos after log in.
 3. Administrator: You can delete members' s messages, review added campsites member provided and edit information.
 
-### 1. User side
+### 1. Visitor side
 
 #### Homepage
 
@@ -78,7 +78,7 @@ Click on the album to see album's photos.
 ![](/public/stylesheets/album-photo.PNG)
 
 
-### 2. Member side
+### 2. User side
 
 Log in and click on `sharing`.
 ![](/public/stylesheets/add-button.PNG)
@@ -100,7 +100,7 @@ Or search campsites by google map, the information will fill in automatically.
 
 ![](/public/stylesheets/google-map.PNG)
 
-The administrator have the authority to edit the submitted data.
+> The administrator have the authority to edit the submitted data.
 
 
 ### 3. Administrator side
@@ -112,7 +112,17 @@ Default administrator account:
 | root@example.com  | 12345678  |
 
 
+Log in administrator account and click on `Backstage`.
+![](/public/stylesheets/admin.PNG)
 
+#### Campsites page
+
+![](/public/stylesheets/admin-campsites.PNG)
+
+
+#### Users page
+
+![](/public/stylesheets/admin-users.PNG)
 
 ## Development
 
