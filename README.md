@@ -56,6 +56,7 @@ Top 10 campsites leaderboard is in `Top 10 campsites` tab.
 ![](/public/stylesheets/top-campsites.PNG)
 
 
+
 #### Campsite information
 
 Click on the campsite to see more information.
@@ -63,14 +64,19 @@ Click on the campsite to see more information.
 
 You can also browse other members' albums and messages about this campsite in the same page.
 ![](/public/stylesheets/relate-albums.PNG)
+
 Leave a message to rank the campsite or record thoughts if you log in. 
 ![](/public/stylesheets/messages.PNG)
+
+
+
 
 #### Album information
 
 Click on the album to see album's photos.
 ![](/public/stylesheets/album-title.PNG)
 ![](/public/stylesheets/album-photo.PNG)
+
 
 ### 2. Member side
 
