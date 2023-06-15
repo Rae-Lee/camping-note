@@ -127,12 +127,12 @@ Log in administrator account and click on `Backstage`.
 ## Development
 
 
-* It's simple to run `Legal-Dictionary` on your local computer.  
+* It's simple to run `camping-note` on your local computer.  
 * The following is step-by-step instruction.
 
 ```
-$ git clone https://github.com/Rae-Lee/Legal-Dictionary-Frontend.git
-$ cd Legal-Dictionary-Frontend
+$ git clone https://github.com/Rae-Lee/camping-note.git
+$ cd camping-note
 $ npm install
 $ npm run start
 ```
