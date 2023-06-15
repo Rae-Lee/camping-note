@@ -37,7 +37,7 @@ Law data came from [政府資料開放平台](https://data.gov.tw/dataset/132066
 3. Administrator: You can delete members' s messages, review added campsites member provided and edit information.
 
 ### User side
-
+### Member side
 
 ### Administrator side
 
