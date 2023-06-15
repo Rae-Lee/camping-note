@@ -3,6 +3,7 @@ const User = require('../models/users')
 const Category = require('../models/categories')
 const Message = require('../models/messages')
 const campsiteServices = require('../services/campsite-service')
+const categoryServices = require('../services/category-service')
 const messageServices = require('../services/message-service')
 const albumServices = require('../services/album-service')
 const { imgurFileHandler } = require('../helpers/file-helpers')
@@ -13,6 +14,7 @@ const adminController = {
     try {
       const DEFAULT_LIMIT = 9
       const page = Number(req.query.page) || 1
+      const categories = await categoryServices.getCategories()
       const categoryId = req.query.categoryId || ''
       let category
       if (categoryId) {
